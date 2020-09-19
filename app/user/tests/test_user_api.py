@@ -9,6 +9,7 @@ from rest_framework import status
 CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
+LIST = reverse('user:user-list')
 
 
 def create_user(**params):
@@ -92,7 +93,8 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_missing_field(self):
         """Test that user name and password are required"""
-        res = self.client.post(TOKEN_URL, {'user_name': 'test', 'password': ''})
+        res = self.client.post(TOKEN_URL, {'user_name': 'test',
+                                           'password': ''})
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -101,6 +103,16 @@ class PublicUserApiTests(TestCase):
         res = self.client.get(ME_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_list_users(self):
+        """Test list users"""
+        payload = {'user_name': 'test.test', 'password': 'test123'}
+        create_user(**payload)
+
+        res = self.client.get(LIST)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data[0]['user_name'], 'test.test')
 
 
 class PrivateUserApiTests(TestCase):
