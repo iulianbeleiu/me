@@ -7,6 +7,7 @@ class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     stars = models.IntegerField(default=5)
     review = models.TextField(blank=True)
+    author = models.CharField(max_length=255, default="Anonim")
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
