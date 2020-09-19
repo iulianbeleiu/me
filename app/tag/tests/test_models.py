@@ -3,9 +3,9 @@ from django.contrib.auth import get_user_model
 from tag.models import Tag
 
 
-def sample_user(email='test@test.com', password='test123'):
+def sample_user(user_name='test.test', password='test123'):
     """Create a sample user"""
-    return get_user_model().objects.create_user(email, password)
+    return get_user_model().objects.create_user(user_name, password)
 
 
 class ModelTests(TestCase):
