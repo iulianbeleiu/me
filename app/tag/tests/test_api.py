@@ -30,7 +30,7 @@ class PublicTagsApiTests(TestCase):
 
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            email='test@test.com',
+            user_name='test.test',
             password='test123'
         )
         self.client = APIClient()
@@ -53,7 +53,7 @@ class PublicTagsApiTests(TestCase):
         """Test that the Tags returned are for authenticated user"""
         tag = Tag.objects.create(user=self.user, name='Dessert')
         Tag.objects.create(user=get_user_model().objects.create_user(
-            email='admin@admin.com',
+            user_name='admin.admin',
             password='testadmin'
         ), name='Vegan')
 
