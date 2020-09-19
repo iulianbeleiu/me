@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Rating
+
+from .serializer import RatingSerializer
+
+
+class RatingViewSet(viewsets.ModelViewSet):
+
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
